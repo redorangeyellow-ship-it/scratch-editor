@@ -35,7 +35,7 @@ jobs:
       - name: Get blocks hash
         id: blocks-hash
         run: |
-          echo "hash=${{ hashFiles('scratch-blocks-src/src/**', 'scratch-blocks-src/package-lock.json', 'scratch-blocks-src/core/**') }}" >> $GITHUB_OUTPUT
+          echo "hash=${{ hashFiles('scratch-blocks-src/**') }}" >> $GITHUB_OUTPUT
 
       - name: Cache Scratch Blocks Dist
         id: cache-blocks
@@ -127,19 +127,22 @@ jobs:
         working-directory: ./packages
         run: |
           mkdir -p ../pages/
+          # Copy scratch-gui build contents to the root of pages/ so it lives at /editor/
+          cp -r scratch-gui/build/* ../pages/
+          
+          # Maintain other playgrounds as subdirectories if needed
           for pkg in *; do
-            if [ -d "${pkg}/playground" ]; then
+            if [ -d "${pkg}/playground" ] && [ "${pkg}" != "scratch-gui" ]; then
               ln -s "../packages/${pkg}/playground" "../pages/${pkg}"
             fi
           done
-          ln -s "../packages/scratch-gui/build" "../pages/scratch-gui"
             
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./pages
-          destination_dir: "${{steps.branch_dir_name.outputs.result}}"
+          destination_dir: "editor"
 
   results:
     name: Test Results
