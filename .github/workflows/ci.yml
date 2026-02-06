@@ -127,32 +127,30 @@ jobs:
           path: packages
       
       - name: Prepare playgrounds
-        working-directory: ./packages
         run: |
-          mkdir -p ../pages/
-          # Copy scratch-gui build contents to the root of pages/ so it lives at /editor/
-          cp -r scratch-gui/build/* ../gui-pages/
+          # Create a clean folder at the root of the workspace
+          mkdir -p final-deploy-folder
           
-          # Maintain other playgrounds as subdirectories if needed
-          for pkg in *; do
-            if [ -d "${pkg}/playground" ] && [ "${pkg}" != "scratch-gui" ]; then
-              ln -s "../packages/${pkg}/playground" "../pages/${pkg}"
-            fi
-          done
+          # 1. Copy the GUI build into the root of our deploy folder
+          # This assumes the artifact download put things in packages/scratch-gui/build
+          cp -r packages/scratch-gui/build/* final-deploy-folder/
+          
+          # 2. Handle other playgrounds
+          
+          # cd packages
+          # for pkg in *; do
+          #   if [ -d "${pkg}/playground" ] && [ "${pkg}" != "scratch-gui" ]; then
+          #     # Copy instead of symlink (symlinks often break on GH Pages)
+          #     cp -r "${pkg}/playground" "../final-deploy-folder/${pkg}"
+          #   fi
+          # done
             
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v4
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./pages
-      #     destination_dir: "editor"
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ../gui-pages # The folder the action should deploy
-          branch: new-gh-pages # The branch the action should deploy to
-          clean: true # Automatically remove deleted files from the target branch
-
+          folder: final-deploy-folder # Points to the folder we just filled
+          branch: new-gh-pages
+          clean: true
   results:
     name: Test Results
     runs-on: ubuntu-latest
