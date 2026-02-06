@@ -10,6 +10,9 @@ on:
 concurrency:
   group: "${{ github.workflow }} @ ${{ github.event.compare || github.head_ref || github.ref }}"
   cancel-in-progress: true
+  
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -137,12 +140,18 @@ jobs:
             fi
           done
             
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v4
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./pages
+      #     destination_dir: "editor"
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./pages
-          destination_dir: "editor"
+          folder: build # The folder the action should deploy
+          branch: new-gh-pages # The branch the action should deploy to
+          clean: true # Automatically remove deleted files from the target branch
 
   results:
     name: Test Results
