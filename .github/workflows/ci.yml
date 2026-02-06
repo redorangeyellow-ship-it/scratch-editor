@@ -87,12 +87,8 @@ jobs:
       - name: Inject Custom Blocks
         if: ${{ steps.filter.outputs.any-workspace == 'true' }}
         run: |
-          # Use 'npm link' by name. This points to the global registration we did in Step 6.
-          # We force remove the existing folder first to ensure the symlink takes priority.
           rm -rf node_modules/scratch-blocks
           npm link scratch-blocks --ignore-scripts
-          
-          # Verify the link is healthy and points to our src folder
           ls -ld node_modules/scratch-blocks
 
       - name: Build packages
@@ -117,40 +113,46 @@ jobs:
     if: ${{ (needs.build.outputs.any-workspace == 'true') && ((!github.event.pull_request) || (github.event.pull_request.head.repo.full_name == github.repository)) && (!startsWith((github.head_ref || github.ref_name), 'renovate/')) }}
     name: Publish preview playgrounds
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Determine GitHub Pages directory name
         id: branch_dir_name
         run: echo "result=${GITHUB_REF_NAME//[^A-Za-z0-9._-]/_}" | tee --append "$GITHUB_OUTPUT"
       
-      - uses: actions/download-artifact@v4
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: packages
       
       - name: Prepare playgrounds
         run: |
-          # Create a clean folder at the root of the workspace
-          mkdir -p final-deploy-folder
+          # 1. Create a staging directory inside the workspace
+          mkdir -p final-pages-deploy
           
-          # 1. Copy the GUI build into the root of our deploy folder
-          # This assumes the artifact download put things in packages/scratch-gui/build
-          cp -r packages/scratch-gui/build/* final-deploy-folder/
+          # 2. Copy scratch-gui build contents to the root of our staging folder
+          if [ -d "packages/scratch-gui/build" ]; then
+            cp -r packages/scratch-gui/build/* final-pages-deploy/
+          else
+            echo "Warning: scratch-gui build not found!"
+          fi
           
-          # 2. Handle other playgrounds
-          
-          # cd packages
-          # for pkg in *; do
-          #   if [ -d "${pkg}/playground" ] && [ "${pkg}" != "scratch-gui" ]; then
-          #     # Copy instead of symlink (symlinks often break on GH Pages)
-          #     cp -r "${pkg}/playground" "../final-deploy-folder/${pkg}"
+          # 3. Copy other playgrounds as subdirectories
+          # for pkg_path in packages/*; do
+          #   pkg_name=$(basename "$pkg_path")
+          #   if [ -d "${pkg_path}/playground" ] && [ "$pkg_name" != "scratch-gui" ]; then
+          #     cp -r "${pkg_path}/playground" "final-pages-deploy/${pkg_name}"
           #   fi
           # done
             
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: final-deploy-folder # Points to the folder we just filled
+          folder: final-pages-deploy
           branch: new-gh-pages
           clean: true
+
   results:
     name: Test Results
     runs-on: ubuntu-latest
