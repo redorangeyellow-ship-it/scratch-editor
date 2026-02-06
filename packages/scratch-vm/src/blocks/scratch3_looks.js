@@ -307,7 +307,9 @@ class Scratch3LooksBlocks {
             looks_goforwardbackwardlayers: this.goForwardBackwardLayers,
             looks_size: this.getSize,
             looks_costumenumbername: this.getCostumeNumberName,
-            looks_backdropnumbername: this.getBackdropNumberName
+            looks_costumewidthheight: this.getCostumeWidthHeight,
+            looks_backdropnumbername: this.getBackdropNumberName,
+            looks_lookseffect: this.getLooksEffect,
         };
     }
 
@@ -321,8 +323,16 @@ class Scratch3LooksBlocks {
                 isSpriteSpecific: true,
                 getId: (targetId, fields) => getMonitorIdForBlockWithArgs(`${targetId}_costumenumbername`, fields)
             },
+            looks_costumewidthheight: {
+                isSpriteSpecific: true,
+                getId: (targetId, fields) => getMonitorIdForBlockWithArgs(`${targetId}_costumewidthheight`, fields)
+            },
             looks_backdropnumbername: {
                 getId: (_, fields) => getMonitorIdForBlockWithArgs('backdropnumbername', fields)
+            },
+            looks_lookseffect: {
+                isSpriteSpecific: true,
+                getId: (_, fields) => getMonitorIdForBlockWithArgs(`${targetId}_lookseffect`, fields)
             }
         };
     }
@@ -606,6 +616,21 @@ class Scratch3LooksBlocks {
         }
         // Else return name
         return util.target.getCostumes()[util.target.currentCostume].name;
+    }
+
+    getCostumeWidthHeight (args, util) {
+        console.log(util.target.getCostumes()[util.target.currentCostume])
+        if (args.WIDTH_HEIGHT === 'width') {
+            return Math.round(util.target.getCostumes()[util.target.currentCostume].size[0]);
+        } else {
+            return Math.round(util.target.getCostumes()[util.target.currentCostume].size[1]);
+        }
+    }
+
+    getLooksEffect (args, util) {
+        const effect = Cast.toString(args.EFFECT).toLowerCase();
+        console.log(util.target.effects)
+        return util.target.effects[effect]
     }
 }
 

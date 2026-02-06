@@ -38,6 +38,7 @@ const motion = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        <block type="motion_turnaround"></block>
         ${blockSeparator}
         <block type="motion_goto">
             <value name="TO">
@@ -135,7 +136,8 @@ const motion = function (isInitialSetup, isStage, targetId, colors) {
         ${blockSeparator}
         <block id="${targetId}_xposition" type="motion_xposition"/>
         <block id="${targetId}_yposition" type="motion_yposition"/>
-        <block id="${targetId}_direction" type="motion_direction"/>`}
+        <block id="${targetId}_direction" type="motion_direction"/>
+        <block id="${targetId}_rotationstyle" type="motion_rotationstyle"/>`}
         ${categorySeparator}
     </category>
     `;
@@ -264,6 +266,9 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                 </shadow>
             </value>
         </block>
+        ${isStage ? ``: `
+            <block id="${targetId}_lookseffect" type="looks_lookseffect"/>
+        `}
         <block type="looks_cleargraphiceffects"/>
         ${blockSeparator}
         ${isStage ? '' : `
@@ -283,6 +288,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
             <block id="backdropnumbername" type="looks_backdropnumbername"/>
         ` : `
             <block id="${targetId}_costumenumbername" type="looks_costumenumbername"/>
+            <block id="${targetId}_costumewidthheight" type="looks_costumewidthheight"/>
             <block id="backdropnumbername" type="looks_backdropnumbername"/>
             <block id="${targetId}_size" type="looks_size"/>
         `}

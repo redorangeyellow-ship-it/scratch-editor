@@ -16,6 +16,11 @@ const messages = defineMessages({
         description: 'Label for the y position monitor when shown on the stage',
         id: 'gui.opcodeLabels.yposition'
     },
+    motion_rotationstyle: {
+        defaultMessage: 'rotation style',
+        description: 'Label for the rotation style monitor when shown on the stage',
+        id: 'gui.opcodeLabels.rotationstyle'
+    },
 
     // Looks
     looks_size: {
@@ -32,6 +37,16 @@ const messages = defineMessages({
         defaultMessage: 'costume number',
         description: 'Label for the costume number monitor when shown on the stage',
         id: 'gui.opcodeLabels.costumenumber'
+    },
+    looks_costumewidth: {
+        defaultMessage: 'costume width',
+        description: 'Label for the costume name monitor when shown on the stage',
+        id: 'gui.opcodeLabels.costumewidth'
+    },
+    looks_costumeheight: {
+        defaultMessage: 'costume height',
+        description: 'Label for the costume number monitor when shown on the stage',
+        id: 'gui.opcodeLabels.costumeheight'
     },
     looks_backdropname: {
         defaultMessage: 'backdrop name',
@@ -139,11 +154,14 @@ class OpcodeLabels {
             motion_direction: {category: 'motion'},
             motion_xposition: {category: 'motion'},
             motion_yposition: {category: 'motion'},
+            motion_rotationstyle: {category: 'motion'},
 
             // Looks
             looks_size: {category: 'looks'},
             looks_costumenumbername: {category: 'looks'},
+            looks_costumewidthheight: {category: 'looks'},
             looks_backdropnumbername: {category: 'looks'},
+            looks_lookseffect: {category: 'looks'},
             looks_backdropname: {category: 'looks'},
 
             // Data
@@ -186,14 +204,24 @@ class OpcodeLabels {
         this._opcodeMap.motion_direction.labelFn = () => this._translator(messages.motion_direction);
         this._opcodeMap.motion_xposition.labelFn = () => this._translator(messages.motion_xposition);
         this._opcodeMap.motion_yposition.labelFn = () => this._translator(messages.motion_yposition);
+        this._opcodeMap.motion_rotationstyle.labelFn = () => this._translator(messages.motion_rotationstyle);
 
         // Looks
         this._opcodeMap.looks_size.labelFn = () => this._translator(messages.looks_size);
+        this._opcodeMap.looks_lookseffect.labelFn = params => {
+            return params.EFFECT
+        };        
         this._opcodeMap.looks_costumenumbername.labelFn = params => {
             if (params.NUMBER_NAME === 'number') {
                 return this._translator(messages.looks_costumenumber);
             }
             return this._translator(messages.looks_costumename);
+        };
+        this._opcodeMap.looks_costumewidthheight.labelFn = params => {
+            if (params.WIDTH_HEIGHT === 'width') {
+                return this._translator(messages.looks_costumewidth);
+            }
+            return this._translator(messages.looks_costumeheight);
         };
         this._opcodeMap.looks_backdropnumbername.labelFn = params => {
             if (params.NUMBER_NAME === 'number') {

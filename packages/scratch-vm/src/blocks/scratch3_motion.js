@@ -1,3 +1,4 @@
+const { ROTATION_STYLE_ALL_AROUND } = require('../sprites/rendered-target');
 const Cast = require('../util/cast');
 const MathUtil = require('../util/math-util');
 const Timer = require('../util/timer');
@@ -22,6 +23,7 @@ class Scratch3MotionBlocks {
             motion_goto: this.goTo,
             motion_turnright: this.turnRight,
             motion_turnleft: this.turnLeft,
+            motion_turnaround: this.turnAround,
             motion_pointindirection: this.pointInDirection,
             motion_pointtowards: this.pointTowards,
             motion_glidesecstoxy: this.glide,
@@ -35,6 +37,7 @@ class Scratch3MotionBlocks {
             motion_xposition: this.getX,
             motion_yposition: this.getY,
             motion_direction: this.getDirection,
+            motion_rotationstyle: this.getRotationStyle,
             // Legacy no-op blocks:
             motion_scroll_right: () => {},
             motion_scroll_up: () => {},
@@ -57,6 +60,10 @@ class Scratch3MotionBlocks {
             motion_direction: {
                 isSpriteSpecific: true,
                 getId: targetId => `${targetId}_direction`
+            },
+            motion_rotationstyle: {
+                isSpriteSpecific: true,
+                getId: targetId => `${targetId}_rotationstyle`
             }
         };
     }
@@ -111,6 +118,10 @@ class Scratch3MotionBlocks {
     turnLeft (args, util) {
         const degrees = Cast.toNumber(args.DEGREES);
         util.target.setDirection(util.target.direction - degrees);
+    }
+
+    turnAround(args, util) {
+        util.target.setDirection(util.target.direction + 180)
     }
 
     pointInDirection (args, util) {
@@ -273,6 +284,10 @@ class Scratch3MotionBlocks {
 
     getDirection (args, util) {
         return util.target.direction;
+    }
+
+    getRotationStyle (args, util) {
+        return util.target.rotationStyle;
     }
 
     // This corresponds to snapToInteger in Scratch 2
