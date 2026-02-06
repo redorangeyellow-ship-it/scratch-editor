@@ -131,7 +131,7 @@ jobs:
         run: |
           mkdir -p ../pages/
           # Copy scratch-gui build contents to the root of pages/ so it lives at /editor/
-          cp -r scratch-gui/build/* ../gui/
+          cp -r scratch-gui/build/* ../gui-pages/
           
           # Maintain other playgrounds as subdirectories if needed
           for pkg in *; do
@@ -149,7 +149,7 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./gui # The folder the action should deploy
+          folder: ../gui-pages # The folder the action should deploy
           branch: new-gh-pages # The branch the action should deploy to
           clean: true # Automatically remove deleted files from the target branch
 
