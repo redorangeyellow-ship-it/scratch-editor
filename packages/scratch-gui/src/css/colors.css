@@ -27,6 +27,11 @@ $looks-transparent: hsla(260, 60%, 60%, 0.35); /* 35% transparent version of loo
 $looks-light-transparent: hsla(260, 60%, 60%, 0.15); /* 15% transparent version of looks-tertiary */
 $looks-secondary-dark: 	hsla(260, 42%, 51%, 1); /* #714EB6 */
 
+$looks-secondary: hsla(225, 75%, 55%, 1);           /* #3D6BEB - Vivid Royal Blue */
+$looks-transparent: hsla(225, 75%, 55%, 0.35);     /* 35% transparent version */
+$looks-light-transparent: hsla(225, 75%, 55%, 0.15); /* 15% transparent version */
+$looks-secondary-dark: hsla(225, 65%, 45%, 1);      /* #2950C6 - Deeper, weighted Royal */
+
 $red-primary: hsla(20, 100%, 55%, 1); /* #FF661A */
 $red-tertiary: hsla(20, 100%, 45%, 1); /* #E64D00 */
 

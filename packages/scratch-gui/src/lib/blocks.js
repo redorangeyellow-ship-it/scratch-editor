@@ -7,6 +7,9 @@
 export default function (vm, useCatBlocks) {
     const ScratchBlocks = require('scratch-blocks');
 
+    window.ScratchBlocks = ScratchBlocks;
+    window.vm = vm;
+
     // TODO: Set theme from editor settings
     if (useCatBlocks) {
         ScratchBlocks.setTheme(ScratchBlocks.Themes.CAT_BLOCKS);

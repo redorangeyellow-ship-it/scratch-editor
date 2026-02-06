@@ -124,7 +124,7 @@ const GUIComponent = props => {
         basePath,
         backdropLibraryVisible,
         backpackHost,
-        backpackVisible,
+        // backpackVisible,
         blocksId,
         blocksTabVisible,
         cardsVisible,
@@ -188,7 +188,7 @@ const GUIComponent = props => {
         onTelemetryModalOptIn,
         onTelemetryModalOptOut,
         onUpdateProjectThumbnail,
-        showComingSoon,
+        // showComingSoon,
         soundsTabVisible,
         stageSizeMode,
         targetIsStage,
@@ -203,6 +203,10 @@ const GUIComponent = props => {
         vm,
         ...componentProps
     } = omit(props, 'dispatch', 'setPlatform');
+
+    const showComingSoon = false
+    const backpackVisible = false
+    
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
