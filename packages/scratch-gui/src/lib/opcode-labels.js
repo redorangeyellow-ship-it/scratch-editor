@@ -132,6 +132,21 @@ const messages = defineMessages({
         defaultMessage: 'timer',
         description: 'Label for the timer monitor when shown on the stage',
         id: 'gui.opcodeLabels.timer'
+    },
+    sensing_mousedown: {
+        defaultMessage: 'mouse down?',
+        description: 'Label for the mouse down monitor when shown on the stage',
+        id: 'gui.opcodeLabels.mousedown'
+    },
+    sensing_mousex: {
+        defaultMessage: 'mouse x',
+        description: 'Label for the mouse x monitor when shown on the stage',
+        id: 'gui.opcodeLabels.mousex'
+    },
+    sensing_mousey: {
+        defaultMessage: 'mouse y',
+        description: 'Label for the mouse y monitor when shown on the stage',
+        id: 'gui.opcodeLabels.mousey'
     }
 });
 
@@ -179,7 +194,10 @@ class OpcodeLabels {
             sensing_online: {category: 'sensing'},
             sensing_username: {category: 'sensing'},
             sensing_current: {category: 'sensing'},
-            sensing_timer: {category: 'sensing'}
+            sensing_timer: {category: 'sensing'},
+            sensing_mousedown: {category: 'sensing'},
+            sensing_mousex: {category: 'sensing'},
+            sensing_mousey: {category: 'sensing'}
         };
 
         // Initialize opcodeMap with default strings
@@ -244,6 +262,10 @@ class OpcodeLabels {
         }
 
         // Sensing
+        this._opcodeMap.sensing_mousedown.labelFn = () => this._translator(messages.sensing_mousedown);
+        this._opcodeMap.sensing_mousex.labelFn = () => this._translator(messages.sensing_mousex);
+        this._opcodeMap.sensing_mousey.labelFn = () => this._translator(messages.sensing_mousey);
+
         this._opcodeMap.sensing_answer.labelFn = () => this._translator(messages.sensing_answer);
         this._opcodeMap.sensing_loudness.labelFn = () => this._translator(messages.sensing_loudness);
         this._opcodeMap.sensing_online.labelFn = () => this._translator(messages.sensing_online);

@@ -73,7 +73,8 @@ class Scratch3SensingBlocks {
             sensing_answer: this.getAnswer,
             sensing_online: this.getOnline,
             sensing_username: this.getUsername,
-            sensing_userid: () => {} // legacy no-op block
+            sensing_userid: () => {}, // legacy no-op block
+            sensing_draggable: this.draggable
         };
     }
 
@@ -90,6 +91,15 @@ class Scratch3SensingBlocks {
             },
             sensing_timer: {
                 getId: () => 'timer'
+            },
+            sensing_mousedown: {
+                getId: () => 'mousedown'
+            },
+            sensing_mousex: {
+                getId: () => 'mousex'
+            },
+            sensing_mousey: {
+                getId: () => 'mousey'
             },
             sensing_current: {
                 // This is different from the default toolbox xml id in order to support
@@ -344,6 +354,10 @@ class Scratch3SensingBlocks {
 
     getUsername (args, util) {
         return util.ioQuery('userData', 'getUsername');
+    }
+
+    draggable(args, util) {
+        return util.target.draggable
     }
 }
 
