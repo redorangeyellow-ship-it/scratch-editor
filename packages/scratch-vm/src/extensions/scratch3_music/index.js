@@ -909,6 +909,15 @@ class Scratch3MusicBlocks {
                         description: 'get the current tempo (speed) for notes, drums, and rests played'
                     }),
                     blockType: BlockType.REPORTER
+                },
+                {
+                    opcode: 'getInstrument',
+                    text: formatMessage({
+                        id: 'music.getInstrument',
+                        default: 'instrument',
+                        description: 'get the currently selected instrument'
+                    }),
+                    blockType: BlockType.REPORTER
                 }
             ],
             menus: {
@@ -1328,6 +1337,15 @@ class Scratch3MusicBlocks {
             return stage.tempo;
         }
         return 60;
+    }
+
+
+    /**
+     * Get the current instrument.
+     * @returns {string} - the current instrument.
+     */
+    getInstrument(args, util) {
+        return this._getMusicState(util.target).currentInstrument + 1
     }
 }
 
