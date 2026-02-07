@@ -145,14 +145,19 @@ jobs:
           #     cp -r "${pkg_path}/playground" "final-pages-deploy/${pkg_name}"
           #   fi
           # done
-            
+          
+      - name: Set Short SHA
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: final-pages-deploy
           branch: new-gh-pages
           clean: true
-
+          git-config-name: github-actions[bot]
+          git-config-email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit-message: "Deploy: ${{ env.SHORT_SHA }}"
   results:
     name: Test Results
     runs-on: ubuntu-latest
