@@ -171,6 +171,7 @@ class OpcodeLabels {
             // Sound
             sound_volume: {category: 'sound'},
             sound_tempo: {category: 'sound'},
+            sound_soundeffect: {category: 'sound'},
 
             // Sensing
             sensing_answer: {category: 'sensing'},
@@ -238,6 +239,9 @@ class OpcodeLabels {
         // Sound
         this._opcodeMap.sound_volume.labelFn = () => this._translator(messages.sound_volume);
         this._opcodeMap.sound_tempo.labelFn = () => this._translator(messages.sound_tempo);
+        this._opcodeMap.sound_soundeffect.labelFn = (params) => {
+            return params.EFFECT
+        }
 
         // Sensing
         this._opcodeMap.sensing_answer.labelFn = () => this._translator(messages.sensing_answer);

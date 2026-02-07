@@ -141,7 +141,9 @@ class Scratch3SoundBlocks {
             sound_effects_menu: this.effectsMenu,
             sound_setvolumeto: this.setVolume,
             sound_changevolumeby: this.changeVolume,
-            sound_volume: this.getVolume
+            sound_volume: this.getVolume,
+            sound_soundeffect: this.getSoundEffect,
+            sound_length: this.getSoundLength
         };
     }
 
@@ -150,6 +152,10 @@ class Scratch3SoundBlocks {
             sound_volume: {
                 isSpriteSpecific: true,
                 getId: targetId => `${targetId}_volume`
+            },
+            sound_soundeffect: {
+                isSpriteSpecific: true,
+                getId: (_, fields) => getMonitorIdForBlockWithArgs(`${targetId}_soundeffect`, fields)
             }
         };
     }
@@ -346,6 +352,18 @@ class Scratch3SoundBlocks {
 
     effectsMenu (args) {
         return args.EFFECT;
+    }
+
+    getSoundEffect(args, util) {
+        const soundState = this._getSoundState(util.target);
+        console.log(soundState, args.EFFECT)
+        return soundState.effects[args.EFFECT == "pitch" ? "pitch": "pan"]
+    }
+
+    getSoundLength(args, util) {
+        const sound = util.target.sprite.sounds[this._getSoundIndex(args.SOUND_MENU, util)]
+        const length = Math.round(sound.sampleCount / sound.rate * 100) / 100
+        return length
     }
 }
 

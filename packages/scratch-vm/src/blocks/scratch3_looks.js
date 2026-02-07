@@ -290,6 +290,7 @@ class Scratch3LooksBlocks {
             looks_thinkforsecs: this.thinkforsecs,
             looks_show: this.show,
             looks_hide: this.hide,
+            looks_visible: this.isVisible,
             looks_hideallsprites: () => {}, // legacy no-op block
             looks_switchcostumeto: this.switchCostume,
             looks_switchbackdropto: this.switchBackdrop,
@@ -386,6 +387,10 @@ class Scratch3LooksBlocks {
     hide (args, util) {
         util.target.setVisible(false);
         this._renderBubble(util.target);
+    }
+
+    isVisible(args, util) {
+        return util.target.visible
     }
 
     /**

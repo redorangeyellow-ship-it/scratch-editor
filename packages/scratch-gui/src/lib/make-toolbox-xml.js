@@ -274,6 +274,8 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
         ${isStage ? '' : `
             <block type="looks_show"/>
             <block type="looks_hide"/>
+            ${blockSeparator}
+            <block type="looks_visible"/>
         ${blockSeparator}
             <block type="looks_gotofrontback"/>
             <block type="looks_goforwardbackwardlayers">
@@ -316,6 +318,13 @@ const sound = function (isInitialSetup, isStage, targetId, soundName, colors) {
             </value>
         </block>
         <block type="sound_stopallsounds"/>
+        <block id="${targetId}_sound_length" type="sound_length">
+            <value name="SOUND_MENU">
+                <shadow type="sound_sounds_menu">
+                    <field name="SOUND_MENU">${soundName}</field>
+                </shadow>
+            </value>
+        </block>
         ${blockSeparator}
         <block type="sound_changeeffectby">
             <value name="VALUE">
@@ -331,6 +340,7 @@ const sound = function (isInitialSetup, isStage, targetId, soundName, colors) {
                 </shadow>
             </value>
         </block>
+        <block id="${targetId}_soundeffect" type="sound_soundeffect"/>
         <block type="sound_cleareffects"/>
         ${blockSeparator}
         <block type="sound_changevolumeby">
